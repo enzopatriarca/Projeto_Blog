@@ -27,7 +27,47 @@ app.use("/",categoriesController)
 app.use("/",articlesController)
 
 app.get("/",(req,res) =>{
-    res.render("index")
+    article.findAll({
+        order:[
+            ['id', 'DESC']
+        ]
+    }).then(articles =>{
+
+        categories.findAll().then(categories =>{
+            res.render("index",{
+                articles:articles,
+                categories:categories
+            })
+        })
+
+
+
+    })
+})
+
+app.get("/:slug",(req,res) =>{
+  var slug = req.params.slug
+  article.findOne({
+    where:{
+        slug:slug
+    }
+  }).then(article =>{
+    if(article != undefined){
+
+        categories.findAll().then(categories =>{
+            res.render("article",{
+                article:article,
+                categories:categories
+            })
+        })
+        
+
+    }else{
+        res.render("/")
+    }
+  }).catch(error =>{
+    res.redirect("/")
+  })
 })
 
 app.listen(4040,()=>{

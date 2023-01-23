@@ -1,0 +1,53 @@
+<%- include ('../../partials/header.ejs'); %>
+
+<body>
+    <%- include ('../../partials/navbar.ejs'); %>
+    <div class="container">
+        <hr>
+        <h2>Lista de Categorias</h2>
+        <a class="btn btn-success" href="/admin/categories/new">Criar nova Categoria</a>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titulo</th>
+                    <th>Slug</th>
+                    <th>Açoes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <% categories.forEach(category => {  %>
+                        <tr>
+                            <th><%=category.id%></th>
+                            <th><%=category.title%></th>
+                            <th><%=category.slug%></th>
+                            <th>
+                                <a class="btn btn-warning" href="/admin/categories/edit/<%=category.id%>">Editar</a>
+                                <form onsubmit="confirm_delete(event,this)" style="display: inline;" method="post" action="/categories/delete">
+                                    <input  type="hidden" name="id" value="<%= category.id %>">
+                                    <button class="btn btn-danger">Deletar</button>
+                                </form>
+                            </th>
+                        </tr>
+                    <%})%>    
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+<%- include ('../../partials/footer.ejs'); %>
+<script>
+    function confirm_delete(event,form) {
+        event.preventDefault()
+        // console.log("formulario impedido!")
+        var descision = confirm("Voce quer deletar?")
+        if (descision) {
+           form.submit()
+        }
+    }
+</script>

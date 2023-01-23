@@ -1,7 +1,30 @@
 <%- include ('partials/header.ejs'); %>
 <body>
-    <div class="consiner-fluid">
-        <h1 style="background-color: aquamarine;">hello word!</h1>
+    <%- include ('partials/homenavbar.ejs'); %>
+    <div class="container">
+        <hr>
+        <div class="container-fluid bg-dark text-light p-5">
+            <div class="container bg-dark p-5">
+                <h1 class="display-4">Bem-vindo</h1>
+                <p class="lead">Esse é um simples blog!</p>
+                <hr class="my-4">
+                <p>Descrição detalhada</p>
+                <a href="/" class="btn btn-primary">Ler mais</a>
+            </div>
+        </div>
+        <hr>
+        <% articles.forEach(article => { %>
+            <div class="card">
+                <div class="card-header">
+                    <h2><%= article.title %></h2>
+                </div>
+                <div class="card-body">
+                    <a href="/<%=article.slug%>" class="btn btn-success">Ler Artigo</a>
+                </div>
+            </div>
+            <br>
+        <% }) %>
+        
     </div>
 </body>
 <%- include ('partials/footer.ejs'); %>
