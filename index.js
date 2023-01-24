@@ -1,6 +1,7 @@
 const express = require("express")
 const bodyparser = require("body-parser")
 const connection = require("./database/database")
+const session = require("express-session")
 
 const categoriesController = require("./categories/categoriesController")
 const articlesController = require("./articles/articlesController")
@@ -19,11 +20,22 @@ connection.authenticate().then(()=>{
 const app = express()
 
 app.set('view engine','ejs')
+
+app.use(session({
+    secret:"qualquercoisaaleatoria",
+    cookie:{
+        maxAge: 30000000
+    }
+}))
+
+
 app.use(express.static('public'))
 app.use(express.json())
 // app.use(express.urlencoded())
 app.use(bodyparser.urlencoded({extended:true}))
 app.use(bodyparser.json())
+
+
 
 app.use("/",categoriesController)
 app.use("/",articlesController)
@@ -67,7 +79,7 @@ app.get("/:slug",(req,res) =>{
         
 
     }else{
-        res.render("/")
+        res.redirect("/")
     }
   }).catch(error =>{
     res.redirect("/")
@@ -96,6 +108,8 @@ app.get("/category/:slug",(req,res)=>{
         res.redirect("/")
     })
 })
+
+
 
 app.listen(4040,()=>{
     console.log('App rodando')
