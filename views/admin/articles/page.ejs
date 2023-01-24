@@ -14,6 +14,21 @@
             </div>
             <br>
         <% }) %>
+
+        <div class="row">
+            <div class="col col-12">
+                <% if(result.page > 2) {%>
+                    <a style="float: left;" href="/articles/page/<%=result.page-1%>"> <<< Prev  </a>
+                <%} else if(result.page == 2){ %>
+                    <a style="float: left;" href="/"> <<< Prev  </a>
+                <% } %>
+
+                <% if(result.next) {%>
+                    <a style="float: right;" href="/articles/page/<%=result.page+1%>">Next >>></a>
+                <%}%>   
+            </div>
+            <hr>
+        </div>
         
     </div>
 </body>

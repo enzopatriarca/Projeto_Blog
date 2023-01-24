@@ -4,9 +4,11 @@ const connection = require("./database/database")
 
 const categoriesController = require("./categories/categoriesController")
 const articlesController = require("./articles/articlesController")
+const userController = require("./user/UserController")
 
 const article = require("./articles/article")
 const categories = require("./categories/category")
+const user = require("./user/User")
 
 connection.authenticate().then(()=>{
     console.log("Conexao com o baco de dados")
@@ -25,12 +27,14 @@ app.use(bodyparser.json())
 
 app.use("/",categoriesController)
 app.use("/",articlesController)
+app.use("/",userController)
 
 app.get("/",(req,res) =>{
     article.findAll({
         order:[
             ['id', 'DESC']
-        ]
+        ],
+        limit: 4
     }).then(articles =>{
 
         categories.findAll().then(categories =>{
