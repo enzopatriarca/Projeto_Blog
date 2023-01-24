@@ -11,6 +11,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Email</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,13 @@
                     <tr>
                         <td><%=user.id%></td>
                         <td><%=user.email%></td>
+                        <td>
+                            <a class="btn btn-warning" href="/user/edit/<%=user.id%>">Editar</a>
+                            <form onsubmit="confirm_delete(event,this)" style="display: inline;" method="post" action="/user/delete">
+                                <input  type="hidden" name="id" value="<%= user.id %>">
+                                <button class="btn btn-danger">Deletar</button>
+                            </form>
+                        </td>
                     </tr>
                 <%}) %>
             </tbody>
@@ -26,3 +34,14 @@
     </div>
 </body>
 <%- include ('../../partials/footer.ejs'); %>
+
+<script>
+    function confirm_delete(event,form) {
+        event.preventDefault()
+        // console.log("formulario impedido!")
+        var descision = confirm("Voce quer deletar?")
+        if (descision) {
+           form.submit()
+        }
+    }
+</script>
